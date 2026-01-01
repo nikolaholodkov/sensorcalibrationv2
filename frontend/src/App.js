@@ -31,6 +31,7 @@ function App() {
           <Route path="/equipment" element={<EquipmentList />} />
           <Route path="/reports" element={<ReportsList />} />
           <Route path="/reports/new" element={<ReportWizard />} />
+          <Route path="/reports/view/:id" element={<ReportWizard viewMode={true} />} />
           <Route path="/reports/edit/:id" element={<ReportWizard />} />
         </Routes>
       </div>

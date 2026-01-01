@@ -107,8 +107,11 @@ function ReportsList() {
                       </span>
                     </td>
                     <td>
-                      <Link to={`/reports/edit/${report.id}`} className="btn btn-secondary" style={{ padding: '0.5rem 1rem', marginRight: '0.5rem' }}>
-                        View/Edit
+                      <Link to={`/reports/view/${report.id}`} className="btn btn-secondary" style={{ padding: '0.5rem 1rem', marginRight: '0.5rem' }}>
+                        View
+                      </Link>
+                      <Link to={`/reports/edit/${report.id}`} className="btn btn-primary" style={{ padding: '0.5rem 1rem', marginRight: '0.5rem' }}>
+                        Edit
                       </Link>
                       <button className="btn btn-danger" style={{ padding: '0.5rem 1rem' }} onClick={() => handleDelete(report.id)}>
                         Delete

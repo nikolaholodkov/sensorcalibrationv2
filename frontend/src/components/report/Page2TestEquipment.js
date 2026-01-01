@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Page2TestEquipment({ reportData, updateReportData, equipment }) {
+function Page2TestEquipment({ reportData, updateReportData, equipment, viewMode = false }) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedEquipId, setSelectedEquipId] = useState('');
   const [equipmentNote, setEquipmentNote] = useState('');
@@ -59,7 +59,7 @@ function Page2TestEquipment({ reportData, updateReportData, equipment }) {
                   <th>Model</th>
                   <th>Serial Number</th>
                   <th>Notes (for this report)</th>
-                  <th>Actions</th>
+                  {!viewMode && <th>Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -75,18 +75,21 @@ function Page2TestEquipment({ reportData, updateReportData, equipment }) {
                         rows="2"
                         style={{ width: '100%', padding: '0.5rem' }}
                         placeholder="Optional notes for this equipment in this report"
+                        disabled={viewMode}
                       />
                     </td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        style={{ padding: '0.5rem 1rem' }}
-                        onClick={() => removeEquipment(index)}
-                      >
-                        Remove
-                      </button>
-                    </td>
+                    {!viewMode && (
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          style={{ padding: '0.5rem 1rem' }}
+                          onClick={() => removeEquipment(index)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -94,7 +97,7 @@ function Page2TestEquipment({ reportData, updateReportData, equipment }) {
           </div>
         )}
 
-        {!showAddForm ? (
+        {!showAddForm && !viewMode ? (
           <button
             type="button"
             className="btn btn-primary"
@@ -103,7 +106,7 @@ function Page2TestEquipment({ reportData, updateReportData, equipment }) {
           >
             Add Equipment
           </button>
-        ) : (
+        ) : showAddForm ? (
           <div style={{ marginTop: '1rem', padding: '1.5rem', background: '#f8f9fa', borderRadius: '4px' }}>
             <h4>Add Equipment</h4>
             
@@ -156,7 +159,7 @@ function Page2TestEquipment({ reportData, updateReportData, equipment }) {
               </button>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
 
       <div className="form-group" style={{ marginTop: '2rem' }}>
@@ -168,6 +171,7 @@ function Page2TestEquipment({ reportData, updateReportData, equipment }) {
           type="text"
           value={reportData.conductivity_testing_level}
           onChange={(e) => updateReportData('conductivity_testing_level', e.target.value)}
+          disabled={viewMode}
         />
       </div>
 
@@ -180,10 +184,11 @@ function Page2TestEquipment({ reportData, updateReportData, equipment }) {
           value={reportData.uncertainty}
           onChange={(e) => updateReportData('uncertainty', e.target.value)}
           rows="3"
+          disabled={viewMode}
         />
       </div>
 
-      {selectedEquipment.length === 0 && (
+      {selectedEquipment.length === 0 && !viewMode && (
         <div style={{ padding: '1rem', background: '#fff3cd', borderRadius: '4px', marginTop: '1rem' }}>
           <strong>Note:</strong> Please add at least one piece of test equipment.
         </div>
@@ -196,6 +201,7 @@ function Page2TestEquipment({ reportData, updateReportData, equipment }) {
           onChange={(e) => updateReportData('page2_footnotes', e.target.value)}
           rows="3"
           placeholder="Optional footnotes for this page..."
+          disabled={viewMode}
         />
       </div>
     </div>

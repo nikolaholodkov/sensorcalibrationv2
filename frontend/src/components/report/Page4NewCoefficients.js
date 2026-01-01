@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Page4NewCoefficients({ reportData, updateReportData }) {
+function Page4NewCoefficients({ reportData, updateReportData, viewMode = false }) {
   const measurements = reportData.page4_measurements || [];
   const [showPasteArea, setShowPasteArea] = useState(false);
   const [pasteText, setPasteText] = useState('');
@@ -77,6 +77,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
             type="date"
             value={reportData.page4_test_date || reportData.page3_test_date}
             onChange={(e) => updateReportData('page4_test_date', e.target.value)}
+            disabled={viewMode}
           />
         </div>
       </div>
@@ -93,6 +94,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
               onChange={(e) => updateReportData('page4_ambient_temp', e.target.value)}
               placeholder="e.g., 24.00"
               style={{ flex: 1 }}
+              disabled={viewMode}
             />
             <span style={{ fontSize: '0.9rem' }}>±</span>
             <input
@@ -102,6 +104,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
               onChange={(e) => updateReportData('page4_ambient_temp_uncertainty', e.target.value)}
               placeholder="0.5"
               style={{ width: '80px' }}
+              disabled={viewMode}
             />
           </div>
         </div>
@@ -116,6 +119,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
               onChange={(e) => updateReportData('page4_relative_humidity', e.target.value)}
               placeholder="e.g., 51.00"
               style={{ flex: 1 }}
+              disabled={viewMode}
             />
             <span style={{ fontSize: '0.9rem' }}>±</span>
             <input
@@ -125,6 +129,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
               onChange={(e) => updateReportData('page4_relative_humidity_uncertainty', e.target.value)}
               placeholder="2.0"
               style={{ width: '80px' }}
+              disabled={viewMode}
             />
           </div>
         </div>
@@ -139,6 +144,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
               onChange={(e) => updateReportData('page4_atmospheric_pressure', e.target.value)}
               placeholder="e.g., 980.5"
               style={{ flex: 1 }}
+              disabled={viewMode}
             />
             <span style={{ fontSize: '0.9rem' }}>±</span>
             <input
@@ -148,6 +154,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
               onChange={(e) => updateReportData('page4_atmospheric_pressure_uncertainty', e.target.value)}
               placeholder="1.0"
               style={{ width: '80px' }}
+              disabled={viewMode}
             />
           </div>
         </div>
@@ -166,6 +173,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
             value={reportData.page4_new_g}
             onChange={(e) => handleCoefficientChange('page4_new_g', e.target.value)}
             placeholder="e.g., -1.00569479e+01"
+            disabled={viewMode}
           />
         </div>
 
@@ -176,6 +184,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
             value={reportData.page4_new_h}
             onChange={(e) => handleCoefficientChange('page4_new_h', e.target.value)}
             placeholder="e.g., 1.65208431e+00"
+            disabled={viewMode}
           />
         </div>
 
@@ -186,6 +195,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
             value={reportData.page4_new_i}
             onChange={(e) => handleCoefficientChange('page4_new_i', e.target.value)}
             placeholder="e.g., 7.09556299e-04"
+            disabled={viewMode}
           />
         </div>
       </div>
@@ -198,6 +208,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
             value={reportData.page4_new_j}
             onChange={(e) => handleCoefficientChange('page4_new_j', e.target.value)}
             placeholder="e.g., 2.37463502e-05"
+            disabled={viewMode}
           />
         </div>
 
@@ -208,6 +219,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
             value={reportData.page4_new_cpcor}
             onChange={(e) => handleCoefficientChange('page4_new_cpcor', e.target.value)}
             placeholder="e.g., -9.57e-08"
+            disabled={viewMode}
           />
         </div>
 
@@ -218,6 +230,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
             value={reportData.page4_new_ctcor}
             onChange={(e) => handleCoefficientChange('page4_new_ctcor', e.target.value)}
             placeholder="e.g., 3.25e-06"
+            disabled={viewMode}
           />
         </div>
       </div>
@@ -229,6 +242,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
           onChange={(e) => updateReportData('page4_formula_text', e.target.value)}
           rows="4"
           style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}
+          disabled={viewMode}
         />
       </div>
 
@@ -262,6 +276,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
             onChange={(e) => setPasteText(e.target.value)}
             placeholder="Paste your table data here..."
             style={{ width: '100%', minHeight: '120px', padding: '10px', fontFamily: 'monospace', fontSize: '0.9rem', border: '1px solid #ced4da', borderRadius: '4px' }}
+            disabled={viewMode}
           />
           <div style={{ marginTop: '10px', display: 'flex', gap: '10px' }}>
             <button 
@@ -308,6 +323,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
                       value={m.inst_temp}
                       onChange={(e) => updateMeasurement(index, 'inst_temp', e.target.value)}
                       style={{ width: '100%', padding: '0.25rem' }}
+                      disabled={viewMode}
                     />
                   </td>
                   <td>
@@ -316,6 +332,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
                       value={m.reference_conductivity}
                       onChange={(e) => updateMeasurement(index, 'reference_conductivity', e.target.value)}
                       style={{ width: '100%', padding: '0.25rem' }}
+                      disabled={viewMode}
                     />
                   </td>
                   <td>
@@ -324,6 +341,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
                       value={m.inst_freq}
                       onChange={(e) => updateMeasurement(index, 'inst_freq', e.target.value)}
                       style={{ width: '100%', padding: '0.25rem' }}
+                      disabled={viewMode}
                     />
                   </td>
                   <td>
@@ -332,6 +350,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
                       value={m.predicted_conductivity}
                       onChange={(e) => updateMeasurement(index, 'predicted_conductivity', e.target.value)}
                       style={{ width: '100%', padding: '0.25rem' }}
+                      disabled={viewMode}
                     />
                   </td>
                   <td>
@@ -340,6 +359,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
                       value={m.residual}
                       onChange={(e) => updateMeasurement(index, 'residual', e.target.value)}
                       style={{ width: '100%', padding: '0.25rem' }}
+                      disabled={viewMode}
                     />
                   </td>
                   <td>
@@ -374,6 +394,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
           value={reportData.page4_accuracy_note}
           onChange={(e) => updateReportData('page4_accuracy_note', e.target.value)}
           rows="2"
+          disabled={viewMode}
         />
       </div>
 
@@ -383,6 +404,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
           value={reportData.page4_table_legend}
           onChange={(e) => updateReportData('page4_table_legend', e.target.value)}
           rows="8"
+          disabled={viewMode}
         />
       </div>
 
@@ -393,6 +415,7 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
           onChange={(e) => updateReportData('page4_footnotes', e.target.value)}
           rows="3"
           placeholder="Optional footnotes for this page..."
+          disabled={viewMode}
         />
       </div>
     </div>

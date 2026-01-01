@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { sensorsAPI } from '../../services/api';
 
-function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel }) {
+function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel, viewMode = false }) {
   const selectedSensor = sensors.find(s => s.id === reportData.sensor_id);
 
   const handleAuthorToggle = (authorName) => {
@@ -49,6 +49,7 @@ function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel
           value={reportData.report_number}
           onChange={(e) => updateReportData('report_number', e.target.value)}
           placeholder="e.g., 2024/67"
+          disabled={viewMode}
         />
       </div>
 
@@ -58,6 +59,7 @@ function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel
           value={reportData.sensor_id}
           onChange={(e) => updateReportData('sensor_id', parseInt(e.target.value))}
           required
+          disabled={viewMode}
         >
           <option value="">-- Select a sensor --</option>
           {sensors.map(sensor => (
@@ -85,6 +87,7 @@ function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel
           value={reportData.test_date}
           onChange={(e) => updateReportData('test_date', e.target.value)}
           required
+          disabled={viewMode}
         />
       </div>
 
@@ -92,12 +95,13 @@ function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel
         <label>Authors (Select one or more) *</label>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '0.5rem', marginTop: '0.5rem' }}>
           {personnel.map(person => (
-            <label key={person.id} style={{ display: 'flex', alignItems: 'center', padding: '0.5rem', background: '#f8f9fa', borderRadius: '4px', cursor: 'pointer' }}>
+            <label key={person.id} style={{ display: 'flex', alignItems: 'center', padding: '0.5rem', background: '#f8f9fa', borderRadius: '4px', cursor: viewMode ? 'default' : 'pointer' }}>
               <input
                 type="checkbox"
                 checked={(reportData.authors || []).includes(person.name)}
                 onChange={() => handleAuthorToggle(person.name)}
                 style={{ marginRight: '0.5rem' }}
+                disabled={viewMode}
               />
               <span>{person.name}</span>
             </label>
@@ -111,6 +115,7 @@ function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel
           type="text"
           value={reportData.lab_unit}
           onChange={(e) => updateReportData('lab_unit', e.target.value)}
+          disabled={viewMode}
         />
       </div>
 
@@ -121,6 +126,7 @@ function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel
           onChange={(e) => updateReportData('page1_footnotes', e.target.value)}
           rows="3"
           placeholder="Optional footnotes for this page..."
+          disabled={viewMode}
         />
       </div>
     </div>

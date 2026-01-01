@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Page5Conclusions({ reportData, updateReportData }) {
+function Page5Conclusions({ reportData, updateReportData, viewMode = false }) {
   return (
     <div>
       <h3>Page 5: Conclusions and References</h3>
@@ -15,6 +15,7 @@ function Page5Conclusions({ reportData, updateReportData }) {
           onChange={(e) => updateReportData('conclusions', e.target.value)}
           rows="8"
           placeholder="e.g., The conductivity sensor was re-calibrated about 9 months after the previous calibration and adjustment. Although all the residuals were within the accuracy declared by the manufacturer, the computations performed at the higher temperatures exhibited residual values very close to the instrument accuracy; therefore, the coefficients were recomputed."
+          disabled={viewMode}
         />
       </div>
 
@@ -27,6 +28,7 @@ function Page5Conclusions({ reportData, updateReportData }) {
           value={reportData.references}
           onChange={(e) => updateReportData('references', e.target.value)}
           rows="5"
+          disabled={viewMode}
         />
       </div>
 
@@ -55,6 +57,7 @@ function Page5Conclusions({ reportData, updateReportData }) {
           onChange={(e) => updateReportData('page5_footnotes', e.target.value)}
           rows="3"
           placeholder="Optional footnotes for this page..."
+          disabled={viewMode}
         />
       </div>
     </div>

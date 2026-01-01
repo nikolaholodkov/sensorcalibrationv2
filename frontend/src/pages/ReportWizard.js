@@ -7,10 +7,10 @@ import Page3CalibrationSheet from '../components/report/Page3CalibrationSheet';
 import Page4NewCoefficients from '../components/report/Page4NewCoefficients';
 import Page5Conclusions from '../components/report/Page5Conclusions';
 
-function ReportWizard() {
+function ReportWizard({ viewMode = false }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isEditMode = Boolean(id);
+  const isEditMode = Boolean(id) && !viewMode;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -18,6 +18,7 @@ function ReportWizard() {
   const [success, setSuccess] = useState(null);
   const [showCalibrationPrompt, setShowCalibrationPrompt] = useState(false);
   const [needsCalibration, setNeedsCalibration] = useState(true);
+  const [originalNeedsCalibration, setOriginalNeedsCalibration] = useState(true);
 
   // Master data
   const [sensors, setSensors] = useState([]);
@@ -132,7 +133,14 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
     try {
       setLoading(true);
       const response = await reportsAPI.getById(id);
-      setReportData(response.data);
+      const reportData = response.data;
+      
+      // Detect if original report had new calibration coefficients
+      const hadCalibration = Boolean(reportData.page4_new_g || reportData.page4_new_h || reportData.page4_new_i || reportData.page4_new_j);
+      setOriginalNeedsCalibration(hadCalibration);
+      setNeedsCalibration(hadCalibration);
+      
+      setReportData(reportData);
     } catch (err) {
       setError('Failed to fetch report');
       console.error(err);
@@ -142,10 +150,22 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
   };
 
   const handleNext = () => {
-    // Show calibration prompt when moving from page 3 to page 4
+    // In view mode, skip calibration prompt and go directly based on original status
     if (currentPage === 3) {
-      setShowCalibrationPrompt(true);
-      return;
+      if (viewMode) {
+        // In view mode, go to page 4 only if original report had calibration
+        if (originalNeedsCalibration) {
+          setCurrentPage(4);
+        } else {
+          setCurrentPage(5);
+        }
+        window.scrollTo(0, 0);
+        return;
+      } else {
+        // In edit mode, show the prompt
+        setShowCalibrationPrompt(true);
+        return;
+      }
     }
     
     if (currentPage < 5) {
@@ -220,7 +240,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
     { number: 1, label: 'Sensor Under Test' },
     { number: 2, label: 'Test Equipment' },
     { number: 3, label: 'As Received Data' },
-    { number: 4, label: 'New Coefficients', skip: !needsCalibration },
+    { number: 4, label: 'New Coefficients', skip: viewMode ? !originalNeedsCalibration : !needsCalibration },
     { number: 5, label: 'Conclusions' }
   ];
 
@@ -231,7 +251,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
   return (
     <div className="container">
       <div className="wizard-container">
-        <h2>{isEditMode ? 'Edit Calibration Report' : 'New Calibration Report'}</h2>
+        <h2>{viewMode ? 'View Calibration Report' : (isEditMode ? 'Edit Calibration Report' : 'New Calibration Report')}</h2>
         
         {error && <div className="error">{error}</div>}
         {success && <div className="success">{success}</div>}
@@ -300,6 +320,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
               updateReportData={updateReportData}
               sensors={sensors}
               personnel={personnel}
+              viewMode={viewMode}
             />
           )}
           
@@ -308,6 +329,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
               reportData={reportData}
               updateReportData={updateReportData}
               equipment={equipment}
+              viewMode={viewMode}
             />
           )}
           
@@ -316,6 +338,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
               reportData={reportData}
               updateReportData={updateReportData}
               sensors={sensors}
+              viewMode={viewMode}
             />
           )}
           
@@ -323,6 +346,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
             <Page4NewCoefficients
               reportData={reportData}
               updateReportData={updateReportData}
+              viewMode={viewMode}
             />
           )}
           
@@ -330,6 +354,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
             <Page5Conclusions
               reportData={reportData}
               updateReportData={updateReportData}
+              viewMode={viewMode}
             />
           )}
         </div>
@@ -344,21 +369,31 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
             )}
           </div>
           
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <button className="btn btn-secondary" onClick={() => handleSave(true)} disabled={loading}>
-              Save as Draft
-            </button>
-            
-            {currentPage < 5 ? (
-              <button className="btn btn-primary" onClick={handleNext} disabled={loading}>
-                Next
+          {viewMode ? (
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              {currentPage < 5 && (
+                <button className="btn btn-primary" onClick={handleNext} disabled={loading}>
+                  Next
+                </button>
+              )}
+            </div>
+          ) : (
+            <div style={{ display: 'flex', gap: '1rem' }}>
+              <button className="btn btn-secondary" onClick={() => handleSave(true)} disabled={loading}>
+                Save as Draft
               </button>
-            ) : (
-              <button className="btn btn-success" onClick={() => handleSave(false)} disabled={loading}>
-                Complete Report
-              </button>
-            )}
-          </div>
+              
+              {currentPage < 5 ? (
+                <button className="btn btn-primary" onClick={handleNext} disabled={loading}>
+                  Next
+                </button>
+              ) : (
+                <button className="btn btn-success" onClick={() => handleSave(false)} disabled={loading}>
+                  Complete Report
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
