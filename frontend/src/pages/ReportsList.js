@@ -56,6 +56,19 @@ function ReportsList() {
 
         {error && <div className="error">{error}</div>}
 
+        <div style={{ 
+          background: '#f8f9fa', 
+          border: '1px solid #dee2e6', 
+          borderRadius: '4px', 
+          padding: '1rem', 
+          marginBottom: '1.5rem',
+          fontSize: '0.9rem',
+          lineHeight: '1.6'
+        }}>
+          <strong>Disclaimer:</strong> The reported results are to be considered valid only for the specified instrument/s or sensor/s and the declared test conditions.
+          The reports are confidential; access to the reports, or parts thereof, in any form is restricted to authorised persons only.
+        </div>
+
         <div className="table-container">
           <table>
             <thead>
