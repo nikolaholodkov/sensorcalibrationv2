@@ -47,6 +47,16 @@ function Page5Conclusions({ reportData, updateReportData }) {
           Click "Complete Report" below to finalize and save this calibration report, or "Save as Draft" to continue editing later.
         </p>
       </div>
+
+      <h4 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Footnotes</h4>
+      <div className="form-group">
+        <textarea
+          value={reportData.page5_footnotes || ''}
+          onChange={(e) => updateReportData('page5_footnotes', e.target.value)}
+          rows="3"
+          placeholder="Optional footnotes for this page..."
+        />
+      </div>
     </div>
   );
 }

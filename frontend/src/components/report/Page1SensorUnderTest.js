@@ -113,6 +113,16 @@ function Page1SensorUnderTest({ reportData, updateReportData, sensors, personnel
           onChange={(e) => updateReportData('lab_unit', e.target.value)}
         />
       </div>
+
+      <h4 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Footnotes</h4>
+      <div className="form-group">
+        <textarea
+          value={reportData.page1_footnotes || ''}
+          onChange={(e) => updateReportData('page1_footnotes', e.target.value)}
+          rows="3"
+          placeholder="Optional footnotes for this page..."
+        />
+      </div>
     </div>
   );
 }

@@ -94,6 +94,14 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
     // Page 5
     conclusions: '',
     references: 'Gerin R. and Savonitto G. (2024). Uncertainty estimate associated with the measurement of ITS-90 temperature and conductivity at the Oceanographic Calibration and Metrology Center (CTMO) of OGS Rel. OGS 2024, Trieste, Italy, 7 pp.',
+    
+    // Footnotes
+    page1_footnotes: '',
+    page2_footnotes: '',
+    page3_footnotes: '',
+    page4_footnotes: '',
+    page5_footnotes: '',
+    
     status: 'draft'
   });
 

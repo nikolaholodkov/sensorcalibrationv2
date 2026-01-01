@@ -385,6 +385,16 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
           rows="8"
         />
       </div>
+
+      <h4 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Footnotes</h4>
+      <div className="form-group">
+        <textarea
+          value={reportData.page4_footnotes || ''}
+          onChange={(e) => updateReportData('page4_footnotes', e.target.value)}
+          rows="3"
+          placeholder="Optional footnotes for this page..."
+        />
+      </div>
     </div>
   );
 }

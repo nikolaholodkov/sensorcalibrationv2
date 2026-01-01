@@ -162,6 +162,11 @@ router.post('/', async (req, res) => {
       page4_measurements,
       conclusions,
       references,
+      page1_footnotes,
+      page2_footnotes,
+      page3_footnotes,
+      page4_footnotes,
+      page5_footnotes,
       status
     } = req.body;
     
@@ -182,10 +187,12 @@ router.post('/', async (req, res) => {
         page4_new_g, page4_new_h, page4_new_i, page4_new_j,
         page4_new_cpcor, page4_new_ctcor, page4_formula_text,
         page4_accuracy_note, page4_table_legend,
-        conclusions, "references", status
+        conclusions, "references",
+        page1_footnotes, page2_footnotes, page3_footnotes, page4_footnotes, page5_footnotes,
+        status
       ) VALUES (
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17,
-        $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45
+        $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50
       ) RETURNING *`,
       [
         report_number, 
@@ -232,6 +239,11 @@ router.post('/', async (req, res) => {
         page4_table_legend,
         conclusions, 
         references, 
+        page1_footnotes || null,
+        page2_footnotes || null,
+        page3_footnotes || null,
+        page4_footnotes || null,
+        page5_footnotes || null,
         status || 'draft'
       ]
     );
@@ -335,6 +347,11 @@ router.put('/:id', async (req, res) => {
       page4_measurements,
       conclusions,
       references,
+      page1_footnotes,
+      page2_footnotes,
+      page3_footnotes,
+      page4_footnotes,
+      page5_footnotes,
       status
     } = req.body;
     
@@ -355,8 +372,9 @@ router.put('/:id', async (req, res) => {
         page4_atmospheric_pressure_uncertainty = $33, page4_new_g = $34, page4_new_h = $35, page4_new_i = $36,
         page4_new_j = $37, page4_new_cpcor = $38, page4_new_ctcor = $39, page4_formula_text = $40,
         page4_accuracy_note = $41, page4_table_legend = $42, conclusions = $43, "references" = $44,
-        status = $45
-      WHERE id = $46 RETURNING *`,
+        page1_footnotes = $45, page2_footnotes = $46, page3_footnotes = $47, page4_footnotes = $48, page5_footnotes = $49,
+        status = $50
+      WHERE id = $51 RETURNING *`,
       [
         report_number, 
         sensor_id || null, 
@@ -402,6 +420,11 @@ router.put('/:id', async (req, res) => {
         page4_table_legend,
         conclusions, 
         references, 
+        page1_footnotes || null,
+        page2_footnotes || null,
+        page3_footnotes || null,
+        page4_footnotes || null,
+        page5_footnotes || null,
         status,
         id
       ]
