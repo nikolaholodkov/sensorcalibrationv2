@@ -89,6 +89,18 @@ router.get('/:id', async (req, res) => {
       }
     }
     
+    if (fullReport.page4_test_date) {
+      // Same logic for page4_test_date
+      if (typeof fullReport.page4_test_date === 'string' && /^\d{4}-\d{2}-\d{2}/.test(fullReport.page4_test_date)) {
+        fullReport.page4_test_date = fullReport.page4_test_date.split('T')[0];
+      } else if (fullReport.page4_test_date instanceof Date) {
+        const year = fullReport.page4_test_date.getFullYear();
+        const month = String(fullReport.page4_test_date.getMonth() + 1).padStart(2, '0');
+        const day = String(fullReport.page4_test_date.getDate()).padStart(2, '0');
+        fullReport.page4_test_date = `${year}-${month}-${day}`;
+      }
+    }
+    
     res.json(fullReport);
   } catch (err) {
     console.error(err);
@@ -131,6 +143,13 @@ router.post('/', async (req, res) => {
       page3_accuracy_note,
       page3_table_legend,
       page3_measurements,
+      page4_test_date,
+      page4_ambient_temp,
+      page4_ambient_temp_uncertainty,
+      page4_relative_humidity,
+      page4_relative_humidity_uncertainty,
+      page4_atmospheric_pressure,
+      page4_atmospheric_pressure_uncertainty,
       page4_new_g,
       page4_new_h,
       page4_new_i,
@@ -157,13 +176,16 @@ router.post('/', async (req, res) => {
         page3_as_received_g, page3_as_received_h, page3_as_received_i, page3_as_received_j,
         page3_as_received_cpcor, page3_as_received_ctcor, page3_formula_text, 
         page3_accuracy_note, page3_table_legend,
+        page4_test_date, page4_ambient_temp, page4_ambient_temp_uncertainty,
+        page4_relative_humidity, page4_relative_humidity_uncertainty,
+        page4_atmospheric_pressure, page4_atmospheric_pressure_uncertainty,
         page4_new_g, page4_new_h, page4_new_i, page4_new_j,
         page4_new_cpcor, page4_new_ctcor, page4_formula_text,
         page4_accuracy_note, page4_table_legend,
         conclusions, "references", status
       ) VALUES (
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17,
-        $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38
+        $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45
       ) RETURNING *`,
       [
         report_number, 
@@ -192,6 +214,13 @@ router.post('/', async (req, res) => {
         page3_formula_text,
         page3_accuracy_note, 
         page3_table_legend,
+        page4_test_date || null,
+        page4_ambient_temp || null,
+        page4_ambient_temp_uncertainty || null,
+        page4_relative_humidity || null,
+        page4_relative_humidity_uncertainty || null,
+        page4_atmospheric_pressure || null,
+        page4_atmospheric_pressure_uncertainty || null,
         page4_new_g, 
         page4_new_h, 
         page4_new_i, 
@@ -287,6 +316,13 @@ router.put('/:id', async (req, res) => {
       page3_accuracy_note,
       page3_table_legend,
       page3_measurements,
+      page4_test_date,
+      page4_ambient_temp,
+      page4_ambient_temp_uncertainty,
+      page4_relative_humidity,
+      page4_relative_humidity_uncertainty,
+      page4_atmospheric_pressure,
+      page4_atmospheric_pressure_uncertainty,
       page4_new_g,
       page4_new_h,
       page4_new_i,
@@ -313,11 +349,14 @@ router.put('/:id', async (req, res) => {
         page3_as_received_g = $18, page3_as_received_h = $19,
         page3_as_received_i = $20, page3_as_received_j = $21, page3_as_received_cpcor = $22,
         page3_as_received_ctcor = $23, page3_formula_text = $24, page3_accuracy_note = $25,
-        page3_table_legend = $26, page4_new_g = $27, page4_new_h = $28, page4_new_i = $29,
-        page4_new_j = $30, page4_new_cpcor = $31, page4_new_ctcor = $32, page4_formula_text = $33,
-        page4_accuracy_note = $34, page4_table_legend = $35, conclusions = $36, "references" = $37,
-        status = $38
-      WHERE id = $39 RETURNING *`,
+        page3_table_legend = $26, page4_test_date = $27, page4_ambient_temp = $28,
+        page4_ambient_temp_uncertainty = $29, page4_relative_humidity = $30,
+        page4_relative_humidity_uncertainty = $31, page4_atmospheric_pressure = $32,
+        page4_atmospheric_pressure_uncertainty = $33, page4_new_g = $34, page4_new_h = $35, page4_new_i = $36,
+        page4_new_j = $37, page4_new_cpcor = $38, page4_new_ctcor = $39, page4_formula_text = $40,
+        page4_accuracy_note = $41, page4_table_legend = $42, conclusions = $43, "references" = $44,
+        status = $45
+      WHERE id = $46 RETURNING *`,
       [
         report_number, 
         sensor_id || null, 
@@ -345,6 +384,13 @@ router.put('/:id', async (req, res) => {
         page3_formula_text,
         page3_accuracy_note, 
         page3_table_legend,
+        page4_test_date || null,
+        page4_ambient_temp || null,
+        page4_ambient_temp_uncertainty || null,
+        page4_relative_humidity || null,
+        page4_relative_humidity_uncertainty || null,
+        page4_atmospheric_pressure || null,
+        page4_atmospheric_pressure_uncertainty || null,
         page4_new_g, 
         page4_new_h, 
         page4_new_i, 

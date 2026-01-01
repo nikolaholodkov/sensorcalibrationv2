@@ -66,6 +66,13 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
     page3_measurements: [],
     
     // Page 4
+    page4_test_date: '',
+    page4_ambient_temp: '',
+    page4_ambient_temp_uncertainty: '',
+    page4_relative_humidity: '',
+    page4_relative_humidity_uncertainty: '',
+    page4_atmospheric_pressure: '',
+    page4_atmospheric_pressure_uncertainty: '',
     page4_new_g: '',
     page4_new_h: '',
     page4_new_i: '',

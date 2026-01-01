@@ -88,6 +88,13 @@ Predicted = the bath set-point conductivity (S/m), as computed by the instrument
 Predicted-Reference = the conductivity residual (S/m), i.e. the difference between the "Predicted" and "Reference" set-point conductivities',
     
     -- Page 4: Sensor Calibration Sheet - New Coefficients
+    page4_test_date DATE,
+    page4_ambient_temp DECIMAL(5,2),
+    page4_ambient_temp_uncertainty DECIMAL(5,2),
+    page4_relative_humidity DECIMAL(5,2),
+    page4_relative_humidity_uncertainty DECIMAL(5,2),
+    page4_atmospheric_pressure DECIMAL(6,2),
+    page4_atmospheric_pressure_uncertainty DECIMAL(6,2),
     page4_new_g VARCHAR(50),
     page4_new_h VARCHAR(50),
     page4_new_i VARCHAR(50),

@@ -52,6 +52,89 @@ function Page4NewCoefficients({ reportData, updateReportData }) {
     <div>
       <h3>Page 4: Sensor Calibration Sheet (New Coefficients)</h3>
       
+      <div className="form-row">
+        <div className="form-group">
+          <label>Test Date</label>
+          <input
+            type="date"
+            value={reportData.page4_test_date || reportData.page3_test_date}
+            onChange={(e) => updateReportData('page4_test_date', e.target.value)}
+          />
+        </div>
+      </div>
+
+      <h4 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>Ambient Conditions</h4>
+      <div className="form-row">
+        <div className="form-group">
+          <label>Temperature (°C)</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="number"
+              step="0.01"
+              value={reportData.page4_ambient_temp || ''}
+              onChange={(e) => updateReportData('page4_ambient_temp', e.target.value)}
+              placeholder="e.g., 24.00"
+              style={{ flex: 1 }}
+            />
+            <span style={{ fontSize: '0.9rem' }}>±</span>
+            <input
+              type="number"
+              step="0.01"
+              value={reportData.page4_ambient_temp_uncertainty || ''}
+              onChange={(e) => updateReportData('page4_ambient_temp_uncertainty', e.target.value)}
+              placeholder="0.5"
+              style={{ width: '80px' }}
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Relative Humidity (%)</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="number"
+              step="0.01"
+              value={reportData.page4_relative_humidity || ''}
+              onChange={(e) => updateReportData('page4_relative_humidity', e.target.value)}
+              placeholder="e.g., 51.00"
+              style={{ flex: 1 }}
+            />
+            <span style={{ fontSize: '0.9rem' }}>±</span>
+            <input
+              type="number"
+              step="0.01"
+              value={reportData.page4_relative_humidity_uncertainty || ''}
+              onChange={(e) => updateReportData('page4_relative_humidity_uncertainty', e.target.value)}
+              placeholder="2.0"
+              style={{ width: '80px' }}
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Atmospheric Pressure (hPa)</label>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="number"
+              step="0.1"
+              value={reportData.page4_atmospheric_pressure || ''}
+              onChange={(e) => updateReportData('page4_atmospheric_pressure', e.target.value)}
+              placeholder="e.g., 980.5"
+              style={{ flex: 1 }}
+            />
+            <span style={{ fontSize: '0.9rem' }}>±</span>
+            <input
+              type="number"
+              step="0.1"
+              value={reportData.page4_atmospheric_pressure_uncertainty || ''}
+              onChange={(e) => updateReportData('page4_atmospheric_pressure_uncertainty', e.target.value)}
+              placeholder="1.0"
+              style={{ width: '80px' }}
+            />
+          </div>
+        </div>
+      </div>
+      
       <h4 style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>New Conductivity Calibration Coefficients</h4>
       <p style={{ fontSize: '0.875rem', color: '#666', marginBottom: '1rem' }}>
         Enter the newly computed calibration coefficients
