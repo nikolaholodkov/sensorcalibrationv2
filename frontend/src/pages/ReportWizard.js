@@ -193,15 +193,15 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
       // Go to page 4 for new coefficients
       setCurrentPage(4);
     } else {
-      // Skip to page 5, keeping old coefficients
-      // Copy page 3 coefficients to page 4
-      updateReportData('page4_new_g', reportData.page3_as_received_g);
-      updateReportData('page4_new_h', reportData.page3_as_received_h);
-      updateReportData('page4_new_i', reportData.page3_as_received_i);
-      updateReportData('page4_new_j', reportData.page3_as_received_j);
-      updateReportData('page4_new_cpcor', reportData.page3_as_received_cpcor);
-      updateReportData('page4_new_ctcor', reportData.page3_as_received_ctcor);
-      updateReportData('page4_measurements', reportData.page3_measurements);
+      // Skip to page 5, do NOT create page 4 data
+      // Clear page 4 coefficients to ensure page 4 is not saved
+      updateReportData('page4_new_g', '');
+      updateReportData('page4_new_h', '');
+      updateReportData('page4_new_i', '');
+      updateReportData('page4_new_j', '');
+      updateReportData('page4_new_cpcor', '');
+      updateReportData('page4_new_ctcor', '');
+      updateReportData('page4_measurements', []);
       setCurrentPage(5);
     }
     window.scrollTo(0, 0);
@@ -363,7 +363,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
             />
           )}
           
-          {currentPage === 4 && (
+          {currentPage === 4 && !pages.find(p => p.number === 4)?.skip && (
             <Page4NewCoefficients
               reportData={reportData}
               updateReportData={updateReportData}
