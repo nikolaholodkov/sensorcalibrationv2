@@ -108,7 +108,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
 
   useEffect(() => {
     fetchMasterData();
-    if (isEditMode) {
+    if (id) {
       fetchReport();
     }
   }, [id]);
@@ -244,7 +244,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
     { number: 5, label: 'Conclusions' }
   ];
 
-  if (loading && isEditMode) {
+  if (loading && id) {
     return <div className="container"><div className="loading">Loading report...</div></div>;
   }
 
