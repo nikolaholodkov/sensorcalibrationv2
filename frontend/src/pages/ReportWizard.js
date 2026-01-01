@@ -168,8 +168,19 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
       }
     }
     
+    // General navigation: skip page 4 if needed
     if (currentPage < 5) {
-      setCurrentPage(currentPage + 1);
+      let nextPage = currentPage + 1;
+      
+      // Skip page 4 if it should be skipped
+      if (nextPage === 4) {
+        const shouldSkipPage4 = viewMode ? !originalNeedsCalibration : !needsCalibration;
+        if (shouldSkipPage4) {
+          nextPage = 5;
+        }
+      }
+      
+      setCurrentPage(nextPage);
       window.scrollTo(0, 0);
     }
   };
@@ -198,7 +209,17 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
 
   const handlePrevious = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      let prevPage = currentPage - 1;
+      
+      // Skip page 4 if it should be skipped when going back from page 5
+      if (currentPage === 5 && prevPage === 4) {
+        const shouldSkipPage4 = viewMode ? !originalNeedsCalibration : !needsCalibration;
+        if (shouldSkipPage4) {
+          prevPage = 3;
+        }
+      }
+      
+      setCurrentPage(prevPage);
       window.scrollTo(0, 0);
     }
   };
