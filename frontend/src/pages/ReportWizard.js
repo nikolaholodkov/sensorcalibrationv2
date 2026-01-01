@@ -301,7 +301,7 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
 
         {/* Progress indicator */}
         <div className="wizard-progress">
-          {pages.map((page) => (
+          {pages.filter(page => !page.skip).map((page) => (
             <div
               key={page.number}
               className={`wizard-step ${currentPage === page.number ? 'active' : ''} ${currentPage > page.number ? 'completed' : ''}`}
