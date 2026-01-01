@@ -171,8 +171,12 @@ Predicted-Reference = the conductivity residual (S/m), i.e. the difference betwe
       setError(null);
       const dataToSave = { ...reportData, status: isDraft ? 'draft' : 'completed' };
       
-      if (isEditMode) {
-        await reportsAPI.update(id, dataToSave);
+      // Use both URL id and reportData.id to determine edit mode
+      const reportId = id || reportData.id;
+      const isUpdating = isEditMode || reportData.id;
+      
+      if (isUpdating && reportId) {
+        await reportsAPI.update(reportId, dataToSave);
         setSuccess('Report updated successfully!');
       } else {
         await reportsAPI.create(dataToSave);

@@ -54,12 +54,40 @@ router.get('/:id', async (req, res) => {
       [id]
     );
     
-    // Combine all data
+    // Combine all data and convert equipment_details back to selected_equipment
     const fullReport = {
       ...report,
+      selected_equipment: report.equipment_details || [],
       page3_measurements: page3MeasurementsResult.rows,
       page4_measurements: page4MeasurementsResult.rows
     };
+    
+    // Format dates as YYYY-MM-DD strings without timezone conversion
+    // PostgreSQL DATE fields are already in YYYY-MM-DD format
+    if (fullReport.test_date) {
+      // If it's already a string in YYYY-MM-DD format, keep it
+      if (typeof fullReport.test_date === 'string' && /^\d{4}-\d{2}-\d{2}/.test(fullReport.test_date)) {
+        fullReport.test_date = fullReport.test_date.split('T')[0];
+      } else if (fullReport.test_date instanceof Date) {
+        // If it's a Date object, format it carefully to avoid timezone issues
+        const year = fullReport.test_date.getFullYear();
+        const month = String(fullReport.test_date.getMonth() + 1).padStart(2, '0');
+        const day = String(fullReport.test_date.getDate()).padStart(2, '0');
+        fullReport.test_date = `${year}-${month}-${day}`;
+      }
+    }
+    
+    if (fullReport.page3_test_date) {
+      // Same logic for page3_test_date
+      if (typeof fullReport.page3_test_date === 'string' && /^\d{4}-\d{2}-\d{2}/.test(fullReport.page3_test_date)) {
+        fullReport.page3_test_date = fullReport.page3_test_date.split('T')[0];
+      } else if (fullReport.page3_test_date instanceof Date) {
+        const year = fullReport.page3_test_date.getFullYear();
+        const month = String(fullReport.page3_test_date.getMonth() + 1).padStart(2, '0');
+        const day = String(fullReport.page3_test_date.getDate()).padStart(2, '0');
+        fullReport.page3_test_date = `${year}-${month}-${day}`;
+      }
+    }
     
     res.json(fullReport);
   } catch (err) {
