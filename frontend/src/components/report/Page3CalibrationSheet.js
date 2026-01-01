@@ -5,6 +5,24 @@ function Page3CalibrationSheet({ reportData, updateReportData }) {
   const [showPasteArea, setShowPasteArea] = useState(false);
   const [pasteText, setPasteText] = useState('');
 
+  // Convert scientific notation to decimal string
+  const convertToDecimal = (value) => {
+    if (!value || value.trim() === '') return value;
+    try {
+      const num = parseFloat(value);
+      if (isNaN(num)) return value;
+      // Convert to fixed-point notation with sufficient precision
+      return num.toFixed(12).replace(/\.?0+$/, '');
+    } catch (e) {
+      return value;
+    }
+  };
+
+  const handleCoefficientChange = (field, value) => {
+    const converted = convertToDecimal(value);
+    updateReportData(field, converted);
+  };
+
   const addMeasurementRow = () => {
     const newMeasurements = [...measurements, {
       inst_temp: '',
@@ -146,7 +164,7 @@ function Page3CalibrationSheet({ reportData, updateReportData }) {
           <input
             type="text"
             value={reportData.page3_as_received_g}
-            onChange={(e) => updateReportData('page3_as_received_g', e.target.value)}
+            onChange={(e) => handleCoefficientChange('page3_as_received_g', e.target.value)}
             placeholder="e.g., -1.00736605e+01"
           />
         </div>
@@ -156,7 +174,7 @@ function Page3CalibrationSheet({ reportData, updateReportData }) {
           <input
             type="text"
             value={reportData.page3_as_received_h}
-            onChange={(e) => updateReportData('page3_as_received_h', e.target.value)}
+            onChange={(e) => handleCoefficientChange('page3_as_received_h', e.target.value)}
             placeholder="e.g., 1.65890031e+00"
           />
         </div>
@@ -166,7 +184,7 @@ function Page3CalibrationSheet({ reportData, updateReportData }) {
           <input
             type="text"
             value={reportData.page3_as_received_i}
-            onChange={(e) => updateReportData('page3_as_received_i', e.target.value)}
+            onChange={(e) => handleCoefficientChange('page3_as_received_i', e.target.value)}
             placeholder="e.g., -1.36088992e-03"
           />
         </div>
@@ -178,7 +196,7 @@ function Page3CalibrationSheet({ reportData, updateReportData }) {
           <input
             type="text"
             value={reportData.page3_as_received_j}
-            onChange={(e) => updateReportData('page3_as_received_j', e.target.value)}
+            onChange={(e) => handleCoefficientChange('page3_as_received_j', e.target.value)}
             placeholder="e.g., 1.92261776e-04"
           />
         </div>
@@ -188,7 +206,7 @@ function Page3CalibrationSheet({ reportData, updateReportData }) {
           <input
             type="text"
             value={reportData.page3_as_received_cpcor}
-            onChange={(e) => updateReportData('page3_as_received_cpcor', e.target.value)}
+            onChange={(e) => handleCoefficientChange('page3_as_received_cpcor', e.target.value)}
             placeholder="e.g., -9.57e-08"
           />
         </div>
@@ -198,7 +216,7 @@ function Page3CalibrationSheet({ reportData, updateReportData }) {
           <input
             type="text"
             value={reportData.page3_as_received_ctcor}
-            onChange={(e) => updateReportData('page3_as_received_ctcor', e.target.value)}
+            onChange={(e) => handleCoefficientChange('page3_as_received_ctcor', e.target.value)}
             placeholder="e.g., 3.25e-06"
           />
         </div>
