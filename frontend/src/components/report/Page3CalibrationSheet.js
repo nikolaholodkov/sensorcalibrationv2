@@ -67,35 +67,71 @@ function Page3CalibrationSheet({ reportData, updateReportData }) {
       <div className="form-row">
         <div className="form-group">
           <label>Temperature (°C)</label>
-          <input
-            type="number"
-            step="0.01"
-            value={reportData.page3_ambient_temp}
-            onChange={(e) => updateReportData('page3_ambient_temp', e.target.value)}
-            placeholder="e.g., 24.00"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="number"
+              step="0.01"
+              value={reportData.page3_ambient_temp}
+              onChange={(e) => updateReportData('page3_ambient_temp', e.target.value)}
+              placeholder="e.g., 24.00"
+              style={{ flex: 1 }}
+            />
+            <span style={{ fontSize: '0.9rem' }}>±</span>
+            <input
+              type="number"
+              step="0.01"
+              value={reportData.page3_ambient_temp_uncertainty || ''}
+              onChange={(e) => updateReportData('page3_ambient_temp_uncertainty', e.target.value)}
+              placeholder="0.5"
+              style={{ width: '80px' }}
+            />
+          </div>
         </div>
 
         <div className="form-group">
           <label>Relative Humidity (%)</label>
-          <input
-            type="number"
-            step="0.01"
-            value={reportData.page3_relative_humidity}
-            onChange={(e) => updateReportData('page3_relative_humidity', e.target.value)}
-            placeholder="e.g., 51.00"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="number"
+              step="0.01"
+              value={reportData.page3_relative_humidity}
+              onChange={(e) => updateReportData('page3_relative_humidity', e.target.value)}
+              placeholder="e.g., 51.00"
+              style={{ flex: 1 }}
+            />
+            <span style={{ fontSize: '0.9rem' }}>±</span>
+            <input
+              type="number"
+              step="0.01"
+              value={reportData.page3_relative_humidity_uncertainty || ''}
+              onChange={(e) => updateReportData('page3_relative_humidity_uncertainty', e.target.value)}
+              placeholder="2.0"
+              style={{ width: '80px' }}
+            />
+          </div>
         </div>
 
         <div className="form-group">
           <label>Atmospheric Pressure (hPa)</label>
-          <input
-            type="number"
-            step="0.1"
-            value={reportData.page3_atmospheric_pressure}
-            onChange={(e) => updateReportData('page3_atmospheric_pressure', e.target.value)}
-            placeholder="e.g., 980.5"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <input
+              type="number"
+              step="0.1"
+              value={reportData.page3_atmospheric_pressure}
+              onChange={(e) => updateReportData('page3_atmospheric_pressure', e.target.value)}
+              placeholder="e.g., 980.5"
+              style={{ flex: 1 }}
+            />
+            <span style={{ fontSize: '0.9rem' }}>±</span>
+            <input
+              type="number"
+              step="0.1"
+              value={reportData.page3_atmospheric_pressure_uncertainty || ''}
+              onChange={(e) => updateReportData('page3_atmospheric_pressure_uncertainty', e.target.value)}
+              placeholder="1.0"
+              style={{ width: '80px' }}
+            />
+          </div>
         </div>
       </div>
 

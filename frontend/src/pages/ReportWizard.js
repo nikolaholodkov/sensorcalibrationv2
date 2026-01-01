@@ -42,8 +42,11 @@ function ReportWizard() {
     // Page 3
     page3_test_date: new Date().toISOString().split('T')[0],
     page3_ambient_temp: '',
+    page3_ambient_temp_uncertainty: '',
     page3_relative_humidity: '',
+    page3_relative_humidity_uncertainty: '',
     page3_atmospheric_pressure: '',
+    page3_atmospheric_pressure_uncertainty: '',
     page3_as_received_g: '',
     page3_as_received_h: '',
     page3_as_received_i: '',

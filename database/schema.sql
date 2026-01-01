@@ -65,8 +65,11 @@ CREATE TABLE calibration_reports (
     -- Page 3: Sensor Calibration Sheet - As Received
     page3_test_date DATE,
     page3_ambient_temp DECIMAL(5,2),
+    page3_ambient_temp_uncertainty DECIMAL(5,2),
     page3_relative_humidity DECIMAL(5,2),
+    page3_relative_humidity_uncertainty DECIMAL(5,2),
     page3_atmospheric_pressure DECIMAL(6,2),
+    page3_atmospheric_pressure_uncertainty DECIMAL(6,2),
     page3_as_received_g VARCHAR(50),
     page3_as_received_h VARCHAR(50),
     page3_as_received_i VARCHAR(50),
