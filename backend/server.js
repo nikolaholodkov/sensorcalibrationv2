@@ -1,9 +1,21 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-require('dotenv').config();
+// ============================================
+// SENSOR CALIBRATION PORTAL - BACKEND SERVER
+// ============================================
+// This is the main entry point for the backend API server
+// It handles all HTTP requests from the frontend
 
+// Import required libraries
+const express = require('express');           // Web framework for building APIs
+const cors = require('cors');                 // Enables cross-origin requests (frontend can talk to backend)
+const bodyParser = require('body-parser');    // Parses incoming JSON data from requests
+require('dotenv').config();                   // Loads environment variables from .env file
+
+// Create an Express application instance
+// Think of this as creating your web server
 const app = express();
+
+// Set the port number - use environment variable or default to 5000
+// The server will listen on this port (e.g., http://localhost:5000)
 const PORT = process.env.PORT || 5000;
 
 // Middleware
